@@ -1,6 +1,6 @@
 import "./App.css";
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { render } from "react-dom";
 import Nav from "./components/Nav";
 import App from './components/App';
@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
 import MovieList from './components/MovieList'
-import MovieDetail from './components/MovieDetail'
+import MovieDetail from './components/MovieDetail' 
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
@@ -18,10 +18,10 @@ render(
     <Router>
       <Nav />
       <App>
-        <Switch>
+        <Routes>
           <Route exact path="/" component={MovieList} />
           <Route exact path="/:id" component={MovieDetail} />
-        </Switch>
+        </Routes>
       </App>
     </Router>
   </Provider>,
