@@ -1,26 +1,26 @@
-import React, { useEffect, Fragment } from "react";
-import styled from "styled-components";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { Poster } from "./Movie";
-import Overdrive from "react-overdrive";
+import Overdrive from 'react-overdrive';
+import { useParams } from 'react-router-dom';
+import { Poster } from './Movie';
 import { fetchMovie } from '../actions';
-import { useParams } from "react-router-dom";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const movie = useSelector(state => state.movies.entries[id]);
+  const movie = useSelector((state) => state.movies.entries[id]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchMovie(id));
   }, [dispatch, id]);
 
-  const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
-  const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
+  const POSTER_PATH = 'http://image.tmdb.org/t/p/w185';
+  const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280';
 
   if (movie) {
     return (
-      <Fragment>
+      <>
         <BackdropContainer
           backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}
         />
@@ -29,7 +29,7 @@ const MovieDetail = () => {
             <Poster
               src={`${POSTER_PATH}${movie.poster_path}`}
               alt="poster"
-              style={{ boxShadow: "0 5px 30px black" }}
+              style={{ boxShadow: '0 5px 30px black' }}
             />
           </Overdrive>
           <div id="info">
@@ -43,23 +43,22 @@ const MovieDetail = () => {
             </div>
           </div>
         </DetailInfo>
-  
+
         <Description>
           <p>{movie.overview}</p>
         </Description>
-      </Fragment>
-    )
-  } else {
-    return <h1>Loading...</h1>
+      </>
+    );
   }
-}
+  return <h1>Loading...</h1>;
+};
 
 export default MovieDetail;
 
 const BackdropContainer = styled.div`
   position: relative;
   padding-top: 70vh;
-  background: url(${props => props.backdrop}) no-repeat;
+  background: url(${(props) => props.backdrop}) no-repeat;
   background-position: relative;
   object-fit: cover;
   justify-content: center;

@@ -1,15 +1,17 @@
-import "./App.css";
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { render } from "react-dom";
-import Nav from "./components/Nav";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+import rootReducer from './reducers/index';
+import './App.css';
+
 import App from './components/App';
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers/index";
-import MovieList from './components/MovieList'
-import MovieDetail from './components/MovieDetail' 
+import Nav from './components/Nav';
+import MovieList from './components/MovieList';
+import MovieDetail from './components/MovieDetail';
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
@@ -19,11 +21,11 @@ render(
       <Nav />
       <App>
         <Routes>
-          <Route exact path="/" component={MovieList} />
-          <Route exact path="/:id" component={MovieDetail} />
+          <Route path="/" element={<MovieList />} />
+          <Route path="/:id" element={<MovieDetail />} />
         </Routes>
       </App>
     </Router>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
